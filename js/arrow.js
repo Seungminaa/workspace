@@ -40,3 +40,4 @@ array.forEach(function(value,idx){
 array.forEach((value,idx)=>{
     console.log(value,this);
 });
+//주석
