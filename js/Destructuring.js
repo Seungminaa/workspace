@@ -38,3 +38,4 @@ let [e,f,g,h] = ary;
 console.log(e,f,g,h);
 
 //나머지 파라미터 매개변수(...ary) - 배열로 나옴
+//다름
