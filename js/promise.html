@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module">
+        import cal from '../module/calculator.js';
+        console.log(cal.add(1,2))
+    </script>
+</head>
+<body>
+    <script>
+    //함수가 아닌 객체로 선언시 바로 실행 -> 함수로 호출해서 실행하도록 함
+    let fetch = (url, method, data) => {
+    return new Promise((resolve,reject)=>{
+        const xhr = new XMLHttpRequest();
+        xhr.open(method,url);
+        xhr.setRequestHeader('Content-type','application/json');
+        xhr.send(JSON.stringify(data));
+
+        //서버코드 상태값 확인
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState != XMLHttpRequest.DONE) return;
+
+            if(xhr.status >= 200 && xhr.status < 400){
+                resolve(xhr.response);
+            }else{
+                reject(new Error(xhr.status));
+            }
+        }
+    })
+}
+//JSON 데이터는 parse 작업이 필요
+fetch('https://reqres.in/api/users?page=2','Get')
+.then(result => JSON.parse(result))
+.then(data => console.log(data))
+.catch(err => console.log(err));
+//fetch 밖에 실행에 대해 결과시점을 보장하지 못함
+console.log('fetch 밖에서 실행')
+    </script>
+</body>
+</html>
