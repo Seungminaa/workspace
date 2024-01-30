@@ -1,7 +1,8 @@
 //모듈생성
 const fs = require('fs');
-
 const express = require('express');
+//라우터는 모듈이 아닌 파일로 인식시킴(경로를 찾아가야함)
+const userRoutor = require('./user.js');
 const app = express();
 
 // 미들웨어
@@ -35,7 +36,6 @@ app.use(express.static('./files'));
 //새로운 경로만 부여('/public')
 app.use('/public',express.static('./files'));
 
-
 //Data Loding
 //파일읽어오기
 const jsonFile = fs.readFileSync('./db.json');
@@ -54,6 +54,8 @@ const getData = (target,where)=>{
     }
     return data;
 }
+
+app.use('/user',userRoutor);
 
 //포트지정 터미널당 1개의 listen만 실행
 app.listen(3000,()=>{
