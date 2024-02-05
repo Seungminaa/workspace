@@ -2,13 +2,15 @@ const mysql = require('mysql');
 const sql = require('./db/t_usersSql.js');
 
 // sql 접속설정
+// connectionLimit 최대 10개
+//console.table(process.env)
 const connectionPool = mysql.createPool({
-    host : '127.0.0.1',
-    port : '3306',
-    user : 'developer',
-    password : '1234',
-    database : 'developer',
-    connectionLimit : 20,
+    host : process.env.MYSQL_HOST,
+    port : process.env.MYSQL_PORT,
+    user : process.env.MYSQL_USER,
+    password : process.env.MYSQL_PASSWORD,
+    database : process.env.MYSQL_DB,
+    connectionLimit : process.env.MYSQL_CONNECT_LIMIT,
     debug : true
 });
 

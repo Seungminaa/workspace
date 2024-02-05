@@ -17,7 +17,7 @@ let userInfo =
         , user_age
         , DATE_FORMAT(join_date, '%Y-%m-%d') join_date
 from t_users
-where user_no = ?`;
+where user_id = ?`;
 
 let userInsert = 
 `Insert into t_users 
@@ -26,16 +26,16 @@ set ?`;
 let userUpdateJson = 
  `Update t_users
  set ?
- where user_no = ?`; 
+ where user_id = ?`; 
 
  let userUpdateValue = 
  `Update t_users
- set user_pwd = ?, user_name =?, user_gender = ?, user_age = ?, join_date = ?
- where user_no = ?`;
+ set user_name =?, user_gender = ?, user_age = ?
+ where user_id = ?`;
 
  let userDelete =
  `Delete from t_users
- where user_no = ?`
+ where user_id = ?`
 
 module.exports = {
     userList,
