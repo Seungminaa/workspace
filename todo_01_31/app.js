@@ -1,4 +1,5 @@
-// module 자리
+// module 자리 / db/dbSetting.env 파일은 require('./db.js') 상단에 존재해야함
+require('dotenv').config({path : './db/dbSetting.env'});
 const express = require('express');
 const app = express();
 const sql = require('./db.js');
@@ -20,9 +21,9 @@ app.get('/user', async(req,res)=>{
 });
  
 // 유저 1명 정보 가져오기
-app.get('/user/:no', async(req,res)=>{
-    let userNo = req.params.no;
-    let user = (await sql.query('userInfo',userNo))[0];
+app.get('/user/:id', async(req,res)=>{
+    let userId = req.params.id;
+    let user = (await sql.query('userInfo',userId))[0];
     res.json(user);
 });
 
@@ -34,7 +35,7 @@ app.post('/user', async (req,res) => {
 })
 
 // 유저 정보 수정
-app.put('/user/:no',async (req,res) => {
+app.put('/user/:id',async (req,res) => {
     //set json
     let result = await updateJson(req);
 
@@ -45,7 +46,7 @@ app.put('/user/:no',async (req,res) => {
 
 // Json 수정
 async function updateJson(req){
-    let userData = [selectedJson(req.body.param), req.params.no];
+    let userData = [selectedJson(req.body.param), req.params.id];
     let result = await sql.query('userUpdateJson',userData);
     return result;
 }
@@ -60,14 +61,14 @@ function selectedJson(obj){
 
 // 단일값 수정
 async function updateInfo(req){
-    let userData = [...getInfo(req.body.param),req.params.no]; 
+    let userData = [...getInfo(req.body.param),req.params.id]; 
     let result = await sql.query('userUpdateValue',userData);
     return result;
 }
 
 // 단일값 변경가능 데이터
 function getInfo(obj){
-    let getData = ["user_pwd","user_name","user_gender","user_age","join_date"]
+    let getData = ["user_name","user_gender","user_age"]
     let newAry = [];
     for(let target of getData){
         for(let field in obj){
@@ -81,9 +82,9 @@ function getInfo(obj){
 }
 
 //유저 삭제
-app.delete('/user/:no', async(req,res)=>{
-    let userNo = req.params.no;
-    let user = (await sql.query('userDelete',userNo))[0];
+app.delete('/user/:id', async(req,res)=>{
+    let userId = req.params.id;
+    let user = (await sql.query('userDelete',userId))[0];
     //삭제되서 값없음
     res.json(user);
 });
