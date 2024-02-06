@@ -84,7 +84,7 @@ function getInfo(obj){
 //유저 삭제
 app.delete('/user/:id', async(req,res)=>{
     let userId = req.params.id;
-    let user = (await sql.query('userDelete',userId))[0];
+    let user = await sql.query('userDelete',userId);
     //삭제되서 값없음
     res.json(user);
 });
